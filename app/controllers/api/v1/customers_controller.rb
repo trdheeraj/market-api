@@ -4,7 +4,7 @@ module Api::V1
 
     def index
       @customers = Customer.all
-      render json: @customers
+      render json: @customers, status: 200
     end
 
     def create
@@ -12,17 +12,17 @@ module Api::V1
       @address = Address.create(address_params)
       @customer.address = @address
       @customer.save!
-      render json: @customer
+      render json: @customer, status: 200
     end
 
     def update
       @customer.update_attributes(customer_params)
       @customer.address.update_attributes(address_params)
-      render json: @customer
+      render json: @customer, status: 200
     end
 
     def show
-      render json: @customer
+      render json: @customer, status: 200
     end
 
     def destroy
