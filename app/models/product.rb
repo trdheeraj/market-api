@@ -6,7 +6,7 @@ class Product < ApplicationRecord
 			  uniqueness: { case_sensitive: false },
 			  length: { minimum: 3, maximum: 50 }
 	validates :quantity, presence: true,
-			  numericality: true,
+			  numericality: true
 	validates :rate, presence: true
 	validates :hsn, presence: true
 	validates :gst, presence: true
