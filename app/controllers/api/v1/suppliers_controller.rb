@@ -1,24 +1,37 @@
 module Api::V1
   class SuppliersController < ApplicationController
+    before_action :authenticate_user!
     before_action :set_supplier, only: [:update, :show, :destroy]
 
     def index
-      @suppliers = Supplier.all
-      render json: @suppliers, status: 200
+      begin
+        @suppliers = Supplier.all
+        render json: @suppliers, status: 200
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def create
-      @supplier = Supplier.new(supplier_params)
-      @address = Address.create(address_params)
-      @supplier.address = @address
-      @supplier.save!
-      render json: @supplier, status: 200
+      begin
+        @supplier = Supplier.new(supplier_params)
+        @address = Address.create(address_params)
+        @supplier.address = @address
+        @supplier.save!
+        render json: @supplier, status: 200
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def update
-      @supplier.update_attributes(supplier_params)
-      @supplier.address.update_attributes(address_params)
-      render json: @supplier, status: 200
+      begin
+        @supplier.update_attributes(supplier_params)
+        @supplier.address.update_attributes(address_params)
+        render json: @supplier, status: 200
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def show
@@ -35,7 +48,11 @@ module Api::V1
 
     private
     def set_supplier
-      @supplier = Supplier.find(params[:id])
+      begin
+        @supplier = Supplier.find(params[:id])
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def supplier_params

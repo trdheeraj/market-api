@@ -81,7 +81,7 @@ Devise.setup do |config|
   # It will change confirmation, password recovery and other workflows
   # to behave the same regardless if the e-mail provided was right or wrong.
   # Does not affect registerable.
-  # config.paranoid = true
+  config.paranoid = true
 
   # By default Devise will store the user in session. You can skip storage for
   # particular strategies by setting this option.
@@ -114,7 +114,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = 'a4b641b8ad0e44b49c00c029bafe09b45c4b8dea35305395c5cd8b84a189fd658c990f26b5c7c733fe40c024288d6c3025165eccbee0f38f303a11ce5789679d'
+  config.pepper = 'a4b641b8ad0e44b49c00c029bafe09b45c4b8dea35305395c5cd8b84a189fd658c990f26b5c7c733fe40c024288d6c3025165eccbee0f38f303a11ce5789679d'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false

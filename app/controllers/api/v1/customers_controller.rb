@@ -4,22 +4,34 @@ module Api::V1
     before_action :set_customer, only: [:update, :show, :destroy]
 
     def index
-      @customers = Customer.all
-      render json: @customers, status: 200
+      begin
+        @customers = Customer.all
+        render json: @customers, status: 200
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def create
-      @customer = Customer.new(customer_params)
-      @address = Address.create(address_params)
-      @customer.address = @address
-      @customer.save!
-      render json: @customer, status: 200
+      begin
+        @customer = Customer.new(customer_params)
+        @address = Address.create(address_params)
+        @customer.address = @address
+        @customer.save!
+        render json: @customer, status: 200
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def update
-      @customer.update_attributes(customer_params)
-      @customer.address.update_attributes(address_params)
-      render json: @customer, status: 200
+      begin
+        @customer.update_attributes(customer_params)
+        @customer.address.update_attributes(address_params)
+        render json: @customer, status: 200
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def show
@@ -36,7 +48,11 @@ module Api::V1
 
     private
     def set_customer
-      @customer = Customer.find(params[:id])
+      begin
+        @customer = Customer.find(params[:id])
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def customer_params

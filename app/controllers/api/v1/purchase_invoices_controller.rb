@@ -1,23 +1,38 @@
 module Api::V1
   class PurchaseInvoicesController < ApplicationController
+    before_action :authenticate_user!
     before_action :set_purchase_invoices, only: [:update, :show, :destroy]
 
     def index
-      @purchase_invoices = PurchaseInvoice.all
-      render json: @purchase_invoices
+      begin
+        @purchase_invoices = PurchaseInvoice.all
+        render json: @purchase_invoices, status: 200
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def create
-      @purchase_invoice = PurchaseInvoice.new(purchase_invoice_params)
-      @purchase_invoice.save!
-      render json: @purchase_invoice
+      begin
+        @purchase_invoice = PurchaseInvoice.new(purchase_invoice_params)
+        @purchase_invoice.save!
+        render json: @purchase_invoice, status: 200
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def update
+      begin
+        @purchase_invoice.update_attributes(purchase_invoice_params)
+        render json: @purchase_invoice, status: 200
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def show
-      render json: @purchase_invoice
+      render json: @purchase_invoice, status: 200
     end
 
     def destroy
@@ -30,7 +45,11 @@ module Api::V1
 
     private
     def set_purchase_invoice
-      @purchase_invoice = PurchaseInvoice.find(params[:id])
+      begin
+        @purchase_invoice = PurchaseInvoice.find(params[:id])
+      rescue => exception
+        render json: { errors: exception }
+      end
     end
 
     def purchase_invoice_params
