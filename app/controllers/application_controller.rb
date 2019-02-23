@@ -29,7 +29,11 @@ class ApplicationController < ActionController::API
   end
 
   def current_user
-    @current_user ||= super || User.find(@current_user_id)
+    begin
+      @current_user ||= super || User.find(@current_user_id)
+    rescue => exception
+      @current_user = nil
+    end
   end
 
   def signed_in?
