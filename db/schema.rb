@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_24_115228) do
+ActiveRecord::Schema.define(version: 2019_02_24_125515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2019_02_24_115228) do
     t.integer "sales_invoice_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_customer_transactions_on_customer_id", unique: true
+    t.index ["customer_id"], name: "index_customer_transactions_on_customer_id"
   end
 
   create_table "customers", force: :cascade do |t|
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2019_02_24_115228) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bill_number"], name: "index_purchase_invoices_on_bill_number", unique: true
-    t.index ["supplier_id"], name: "index_purchase_invoices_on_supplier_id", unique: true
+    t.index ["supplier_id"], name: "index_purchase_invoices_on_supplier_id"
   end
 
   create_table "purchase_orders", force: :cascade do |t|
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 2019_02_24_115228) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bill_number"], name: "index_sales_invoices_on_bill_number", unique: true
-    t.index ["customer_id"], name: "index_sales_invoices_on_customer_id", unique: true
+    t.index ["customer_id"], name: "index_sales_invoices_on_customer_id"
   end
 
   create_table "sales_orders", force: :cascade do |t|
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2019_02_24_115228) do
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["sales_invoice_id"], name: "index_sales_orders_on_sales_invoice_id", unique: true
+    t.index ["sales_invoice_id"], name: "index_sales_orders_on_sales_invoice_id"
   end
 
   create_table "supplier_transactions", force: :cascade do |t|
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 2019_02_24_115228) do
     t.integer "purchase_invoice_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["supplier_id"], name: "index_supplier_transactions_on_supplier_id", unique: true
+    t.index ["supplier_id"], name: "index_supplier_transactions_on_supplier_id"
   end
 
   create_table "suppliers", force: :cascade do |t|
