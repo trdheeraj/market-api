@@ -49,7 +49,7 @@ module Api::V1
     end
 
     def purchase_invoice_params
-      params.require(:purchase_invoice).permit(:bill_number, :supplier_id, :date, :discount, :payment_type, :amount, :product_list)
+      params.require(:purchase_invoice).permit(:bill_number, :supplier_id, :date, :discount, :payment_type, :amount)
     end
 
     def product_list_params
@@ -58,8 +58,14 @@ module Api::V1
 
     def create_update_product_and_orders(product_detail_list)
       product_detail_list.each do |product_detail|
-        product = Product.find_by(name: product_detail[:name], hsn: product_detail[:hsn])
-        product = product ? product.update!(quantity: product.quantity + product_detail[:quantity]) : Product.create!(product_detail)
+        product = Product.where('lower(name) = ? and hsn = ?', product_detail[:name].downcase, product_detail[:hsn]).first
+        if product
+          product.update!(quantity: product.quantity + product_detail[:quantity], rate: product_detail[:rate])
+        else
+          Product.create!(name: product_detail[:name], quantity: product_detail[:quantity], rate: product_detail[:rate],
+                          hsn: product_detail[:hsn], gst: product_detail[:gst])
+        end
+        product = Product.where('lower(name) = ? and hsn = ?', product_detail[:name].downcase, product_detail[:hsn]).first
         PurchaseOrder.create!(purchase_invoice_id: @purchase_invoice.id, product_id: product.id, quantity: product_detail[:quantity])
         @current_invoice_amount += (product.rate * product_detail[:quantity])
       end
@@ -72,7 +78,7 @@ module Api::V1
         date: @purchase_invoice.date,
         payment_type: @purchase_invoice.payment_type,
         amount: @purchase_invoice.amount,
-        balance_amount: supplier_current_balance_amount + (@current_invoice_amount - @purchase_invoice.amount),
+        balance_amount: supplier_current_balance_amount.to_f + (@current_invoice_amount - @purchase_invoice.amount),
         purchase_invoice_id: @purchase_invoice.id
       })
     end

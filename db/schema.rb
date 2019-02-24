@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_22_180211) do
+ActiveRecord::Schema.define(version: 2019_02_24_115228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2018_10_22_180211) do
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["purchase_invoice_id"], name: "index_purchase_orders_on_purchase_invoice_id", unique: true
+    t.index ["purchase_invoice_id"], name: "index_purchase_orders_on_purchase_invoice_id"
   end
 
   create_table "sales_invoices", force: :cascade do |t|
