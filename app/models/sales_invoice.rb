@@ -1,7 +1,7 @@
 class SalesInvoice < ApplicationRecord
 	belongs_to :customer
 	has_many :sales_orders
-	has_many :customer_transactions
+	has_one :customer_transactions
 
 	validates :bill_number, presence: true
 	validates :customer_id, presence: true
