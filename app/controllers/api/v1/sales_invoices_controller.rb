@@ -69,7 +69,7 @@ module Api::V1
     end
 
     def create_customer_transaction
-      customer_current_balance_amount = CustomerTransaction.where(customer_id: @sales_invoice.customer_id).order("created_at DESC").first
+      customer_current_balance_amount = CustomerTransaction.where(customer_id: @sales_invoice.customer_id).order("created_at DESC").first.balance_amount
       CustomerTransaction.create!({
         customer_id: @sales_invoice.customer_id,
         date: @sales_invoice.date,

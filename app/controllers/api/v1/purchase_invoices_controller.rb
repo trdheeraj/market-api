@@ -72,7 +72,7 @@ module Api::V1
     end
 
     def create_supplier_transaction
-      supplier_current_balance_amount = SupplierTransaction.where(supplier_id: @purchase_invoice.supplier_id).order("created_at DESC").first
+      supplier_current_balance_amount = SupplierTransaction.where(supplier_id: @purchase_invoice.supplier_id).order("created_at DESC").first.balance_amount
       SupplierTransaction.create!({
         supplier_id: @purchase_invoice.supplier_id,
         date: @purchase_invoice.date,
