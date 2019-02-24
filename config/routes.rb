@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :customers  
       resources :suppliers
       resources :purchase_invoices, except: [:update]
+      resources :sales_invoices, except: [:update]
     end
   end
 end

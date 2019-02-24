@@ -2,6 +2,7 @@ class Supplier < ApplicationRecord
 	belongs_to :address, dependent: :destroy
 	has_many :purchase_invoices
 	has_many :supplier_transactions
+	has_many :purchase_orders, through: :purchase_invoices
 
 	validates :name, presence: true,
 			  uniqueness: { case_sensitive: false },

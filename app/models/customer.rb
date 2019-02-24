@@ -3,6 +3,7 @@ class Customer < ApplicationRecord
 
 	has_many :sales_invoices
 	has_many :customer_transactions
+	has_many :sales_orders, through: :sales_invoices
 
 	validates :name, presence: true,
 			  uniqueness: { case_sensitive: false },
