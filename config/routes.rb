@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :customers  
       resources :suppliers
-      resources :purchase_invoices
+      resources :purchase_invoices, except: [:update]
     end
   end
 end

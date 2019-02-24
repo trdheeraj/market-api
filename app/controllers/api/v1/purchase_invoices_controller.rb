@@ -27,15 +27,6 @@ module Api::V1
       end
     end
 
-    def update
-      begin
-        @purchase_invoice.update_attributes(purchase_invoice_params)
-        render json: @purchase_invoice, status: 200
-      rescue => exception
-        render json: { errors: exception }
-      end
-    end
-
     def show
       render json: @purchase_invoice, status: 200
     end
