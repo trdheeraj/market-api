@@ -11,6 +11,11 @@ Rails.application.routes.draw do
       resources :suppliers
       resources :purchase_invoices, except: [:update]
       resources :sales_invoices, except: [:update]
+      resources :products, only: [:index] do
+        collection do
+          get :name_list
+        end
+      end
     end
   end
 end

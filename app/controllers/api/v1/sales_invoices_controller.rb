@@ -59,9 +59,7 @@ module Api::V1
     def create_update_product_and_orders(product_detail_list)
       product_detail_list.each do |product_detail|
         product = Product.where('lower(name) = ? and hsn = ?', product_detail[:name].downcase, product_detail[:hsn]).first
-        if product
-          product.update!(quantity: product.quantity - product_detail[:quantity])
-        end
+        product.update!(quantity: product.quantity - product_detail[:quantity]) if product
         product = Product.where('lower(name) = ? and hsn = ?', product_detail[:name].downcase, product_detail[:hsn]).first
         SalesOrder.create!(sales_invoice_id: @sales_invoice.id, product_id: product.id, quantity: product_detail[:quantity])
         @current_invoice_amount += (product.rate * product_detail[:quantity])
