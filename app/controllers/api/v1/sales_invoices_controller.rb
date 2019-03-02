@@ -1,7 +1,7 @@
 module Api::V1
   class SalesInvoicesController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_sales_invoice, only: [:update, :show, :destroy]
+    before_action :set_sales_invoice, only: [:show, :destroy]
 
     def index
       begin
